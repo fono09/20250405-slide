@@ -157,7 +157,21 @@ https://learn.microsoft.com/ja-jp/windows-server/storage/nfs/nfs-overview
 
 # 課題(1/2)
 
-## WindowsはUTF-8対応しているが常用するには問題がある(1/3)
+## WindowsはUTF-8対応しているが常用するには問題がある(1/4)
+
+
+⚠️ 個別アプリケーションの文字コードの選定を否定するものではありません
+
+UTF-8利用が可能になった後も含め、Windows用アプリケーション実装における
+依存関係や各種都合により、自発的に選定できない個別の事情が多々あります
+
+基本スタンスとして、ソフトウェアの安定性を尊重します
+
+---
+
+# 課題(1/2)
+
+## WindowsはUTF-8対応しているが常用するには問題がある(2/4)
 
 <div class="columns">
 <div>
@@ -185,7 +199,7 @@ https://cs.dlsite.com/hc/ja/articles/1500002996862-ゲームの起動が正常�
 
 # 課題(1/2)
 
-## WindowsはUTF-8対応しているが常用するには問題がある(2/3)
+## WindowsはUTF-8対応しているが常用するには問題がある(3/4)
 
 そのため、NFSではShit-JIS(厳密にはCP932)で通信することになる
 
@@ -195,9 +209,9 @@ https://manpages.ubuntu.com/manpages/noble/man1/convmvfs.1.html
 
 ---
 
-# 課題(1/2)
+# 課題(1/3)
 
-## WindowsはUTF-8対応しているが常用するには問題がある(3/3)
+## WindowsはUTF-8対応しているが常用するには問題がある(4/4)
 
 イメージとしてはこんな感じ
 
@@ -237,15 +251,15 @@ $ sudo apt install fuse-convmvfs # convmvfs を導入
 $ sudo mkdir -p /exports/var/hoge_cp932 /exports/home/fuga_cp932 # マウンとポイントの空フォルダを作成
 ```
 
-`sudo crontab -e`
-ここは本当は `/etc/cron.d/convmvfs` などに書いておくことをおすすめする
-
-~~QWERTYでEとRって隣なんですよ~~ `crontab -r`
+`sudo crontab -e` で編集して下記の内容を打ち込んだが、本来は
+`/etc/cron.d/convmvfs` などの形での設定をお勧めする
 
 ```
 @reboot convmvfs /exports/var/hoge_cp932 -o icharset=utf8,ocharset=CP932,srcdir=/var/hoge,allow_other
 @reboot convmvfs /exports/home/fuga_cp932 -o icharset=utf8,ocharset=CP932,srcdir=/home/fuga,allow_other
 ```
+
+~~QWERTYでEとRって隣なんですよ~~ 気になる人は`crontab -r` について調べてみよう！
 
 --- 
 
